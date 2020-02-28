@@ -1,0 +1,2 @@
+
+Create a static instance of Scanner(System.in) so you can grab it anywhere.
