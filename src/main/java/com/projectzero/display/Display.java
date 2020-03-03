@@ -10,7 +10,6 @@ public class Display {
 	
 	private static Display instance = null;
 
-	private ArrayList<MenuOption> menuOptions;
 
 	
 	private Display() {
@@ -32,9 +31,6 @@ public class Display {
 		view.show();
 	}
 	
-	
-	public ArrayList<MenuOption> getMenuOptions(){
-		return this.menuOptions;		
-	}
+
 	
 }
