@@ -1,4 +1,4 @@
-package com.projectzero.display;
+package com.projectzero.display.view.menu;
 
 public class MenuOption  {
 

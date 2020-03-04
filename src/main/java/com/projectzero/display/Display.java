@@ -9,11 +9,19 @@ public class Display {
 
 	
 	private static Display instance = null;
+	public static View view;
 
-
-	
 	private Display() {
 		super();
+	}
+	
+	public static void update() {
+		view.show();
+	}
+	
+	public static void update(View newview) {
+		view = newview;
+		view.show();
 	}
 	
 	public static Display getInstance(){
@@ -23,14 +31,6 @@ public class Display {
 		instance = new Display();
 		return instance;
 	}
-	
-	
-	public void print(View view) {
-		
-		//This should assemble the view in System.out with the output and MenuOptions
-		view.show();
-	}
-	
 
 	
 }
