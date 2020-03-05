@@ -8,21 +8,13 @@ import com.projectzero.display.view.menu.MenuOption;
 
 public abstract class View {
 
-	
-	private DAOInterface dao;
-	
+	public String content = "";
+		
 	private ArrayList<MenuOption> menuOptions;
 	
-	public View(DAOInterface dao) {
-		this.dao = dao;
+	public View() {
 		this.menuOptions = new ArrayList<MenuOption>();
 	}
-	
-	public DAOInterface getDao() {
-		return this.dao;
-	}
-	
-	public abstract void show();
 	
 	public void printMenu() {
 		
@@ -35,5 +27,20 @@ public abstract class View {
 	public void addMenuOption(MenuOption mo) {
 		menuOptions.add(mo);
 	}
+
+	
+	
+	
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void show() {
+		System.out.print(this.content);
+	};
 	
 }

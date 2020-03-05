@@ -20,21 +20,23 @@ public class Main {
 
 		sc = new Scanner(System.in);
 
-		// view = new InitView();
+		view = new InitView();
 		// Create application run loop so the application doesn't exit
 		// Setup initial view
 
 		while (running) {
 
 			// Update the view with menuoptions and then process
-			// viewUpdate();
-			System.out.println("::::Update View Here:::::");
-			
+			viewUpdate();
+
 			while (!(sc.nextLine().isEmpty())) {
 				// This will process menu options submitted through scanner.
 				try {
 					int in = Integer.parseInt(sc.nextLine());
 					switch (in) {
+					case 1:
+						setView(new AccountView());
+						break;
 					case 0:
 						exit();
 						break;
@@ -48,6 +50,16 @@ public class Main {
 
 			}
 		}
+	}
+
+	private static View view;
+
+	public static void setView(View v) {
+		view = v;
+	}
+
+	public static void viewUpdate() {
+		view.show();
 	}
 
 	public static void printHelp() {
