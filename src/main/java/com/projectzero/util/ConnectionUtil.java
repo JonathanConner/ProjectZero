@@ -14,25 +14,20 @@ public class ConnectionUtil {
 	 */
 	public static Connection getConnection() {
 
+		String[] creds = System.getenv("DBCreds").split(";");
 		try {
-			
+
 			try {
-				conn = DriverManager.getConnection(
-						"", 
-						"admin",
-						System.getenv("PW")
-				);
+				conn = DriverManager.getConnection(creds[0], creds[1], creds[2]);
 			} catch (SQLException se) {
 				se.printStackTrace();
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return conn;
-		
 
 	}
 
