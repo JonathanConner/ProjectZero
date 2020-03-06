@@ -18,7 +18,7 @@ public class ConnectionUtil {
 			
 			try {
 				conn = DriverManager.getConnection(
-						"jdbc:oracle:thin:@training.crcfsjnko30c.us-east-1.rds.amazonaws.com:1521:ORCL", 
+						"", 
 						"admin",
 						System.getenv("PW")
 				);
