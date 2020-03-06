@@ -15,7 +15,6 @@ public class ConnectionUtil {
 	public static Connection getConnection() {
 
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			try {
 				conn = DriverManager.getConnection(
@@ -28,8 +27,8 @@ public class ConnectionUtil {
 			}
 			
 			
-		} catch (ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return conn;

@@ -5,7 +5,6 @@ package com.projectzero.display.view;
 
 import java.util.ArrayList;
 
-import com.projectzero.dao.DAOInterface;
 
 /**
  * @author Jon

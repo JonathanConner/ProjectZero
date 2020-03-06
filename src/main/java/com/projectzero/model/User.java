@@ -18,7 +18,7 @@ public class User {
 	/**
 	 * Personal Info fields
 	 */
-	private String fristName;
+	private String firstName;
 	private String lastName;
 	private String address;
 	private String dob;
@@ -36,7 +36,7 @@ public class User {
 	 * @param email
 	 * @param password
 	 * @param type
-	 * @param fristName
+	 * @param firstName
 	 * @param lastName
 	 * @param address
 	 * @param dob
@@ -44,7 +44,7 @@ public class User {
 	 * @param ssn
 	 * @param accounts
 	 */
-	public User(int id, String username, String email, String password, String type, String fristName, String lastName,
+	public User(int id, String username, String email, String password, String type, String firstName, String lastName,
 			String address, String dob, String phone, String ssn, List<Account> accounts) {
 		super();
 		this.id = id;
@@ -52,7 +52,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.type = type;
-		this.fristName = fristName;
+		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.dob = dob;
@@ -62,6 +62,10 @@ public class User {
 	}
 
 
+	public User() {
+		super();
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -88,10 +92,12 @@ public class User {
 	}
 
 	public String getPassword() {
+		//This needs to handle hash-to-string on the fly
 		return password;
 	}
 
 	public void setPassword(String password) {
+		//This needs to handle hashing on the fly
 		this.password = password;
 	}
 
@@ -103,12 +109,12 @@ public class User {
 		this.type = type;
 	}
 
-	public String getFristName() {
-		return fristName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFristName(String fristName) {
-		this.fristName = fristName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -164,7 +170,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(accounts, address, dob, email, fristName, id, lastName, password, phone, ssn, type,
+		return Objects.hash(accounts, address, dob, email, firstName, id, lastName, password, phone, ssn, type,
 				username);
 	}
 
@@ -179,7 +185,7 @@ public class User {
 		User other = (User) obj;
 		return Objects.equals(accounts, other.accounts) && Objects.equals(address, other.address)
 				&& Objects.equals(dob, other.dob) && Objects.equals(email, other.email)
-				&& Objects.equals(fristName, other.fristName) && id == other.id
+				&& Objects.equals(firstName, other.firstName) && id == other.id
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
 				&& Objects.equals(phone, other.phone) && Objects.equals(ssn, other.ssn)
 				&& Objects.equals(type, other.type) && Objects.equals(username, other.username);
@@ -188,9 +194,10 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", type="
-				+ type + ", fristName=" + fristName + ", lastName=" + lastName + ", address=" + address + ", dob=" + dob
+				+ type + ", fristName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", dob=" + dob
 				+ ", phone=" + phone + ", ssn=" + ssn + ", accounts=" + accounts + "]";
 	}
+
 
 	
 }

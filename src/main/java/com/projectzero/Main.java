@@ -1,5 +1,6 @@
 package com.projectzero;
 
+import java.sql.Connection;
 import java.util.Scanner;
 
 import com.projectzero.display.view.AccountView;
@@ -20,14 +21,24 @@ public class Main {
 
 		sc = new Scanner(System.in);
 
-		view = new InitView();
+
+		System.out.println("===============================");
+		System.out.println("\n   Welcome to the Bank!\n");
+		System.out.println("===============================");
+		System.out.println("\n   Please Login or Register\n   to use this application");
+		System.out.println("===============================");
+		System.out.println("===============================");
 		// Create application run loop so the application doesn't exit
 		// Setup initial view
 
+		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
+			System.out.println("Connected");
+		}catch(Exception e) {System.out.println("Connection Failed");}
+		
+		
 		while (running) {
 
-			// Update the view with menuoptions and then process
-			viewUpdate();
+			// Update the view with menuoptions and then proces
 
 			while (!(sc.nextLine().isEmpty())) {
 				// This will process menu options submitted through scanner.

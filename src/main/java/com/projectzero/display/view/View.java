@@ -3,7 +3,6 @@ package com.projectzero.display.view;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.projectzero.dao.DAOInterface;
 import com.projectzero.display.view.menu.MenuOption;
 
 public abstract class View {

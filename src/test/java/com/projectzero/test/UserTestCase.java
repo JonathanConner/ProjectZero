@@ -11,12 +11,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.projectzero.model.User;
+import com.projectzero.services.UserService;
+import com.projectzero.util.ConnectionUtil;
+
 /**
  * @author Jon
  *
  */
 public class UserTestCase {
 
+	private UserService us;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -46,8 +52,25 @@ public class UserTestCase {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testUserRegister() 
+	{
+
+		ConnectionUtil.getConnection();
+		us = new UserService();
+		User user = new User();
+		user.setEmail("test@testuser.com");
+		user.setSsn("222-22-2222");
+		user.setFirstName("Testy");
+		user.setLastName("Testerton");
+		user.setUsername("thisisatest");
+		user.setPassword("testing");
+		user.setDob("11-11-1990");
+		user.setAddress("8110 Safari Dr Smyrna, TN");
+		user.setPhone("6153333333");
+		user.setType("test");
+		assertTrue(us.registerUser(user));
+		
+		
 	}
 
 }
