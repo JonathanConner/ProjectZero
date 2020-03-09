@@ -27,7 +27,7 @@ public class LoginView {
 		
 		if(us.getUserInstance()!=null) {
 			if(us.getUserInstance().getType() == "admin") {
-				new AdminView(us); //Create an Admin View
+				//new AdminView(us); //Create an Admin View
 			} else {
 				new AccountView(us);// Create a Standard Account View
 			}

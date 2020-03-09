@@ -42,7 +42,8 @@ public class UserService {
 			
 			User user_tmp = repo.find(username);
 		
-			if(password == user_tmp.getPassword())
+			
+			if(password.equals(user_tmp.getPassword()))
 			{
 				this.userInstance = user_tmp;	
 			} 

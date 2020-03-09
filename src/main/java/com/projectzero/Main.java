@@ -24,6 +24,8 @@ public class Main {
 
 		while (running) {
 
+			
+			
 			new InitView();
 			
 			/*

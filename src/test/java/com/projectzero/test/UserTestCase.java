@@ -53,35 +53,36 @@ public class UserTestCase {
 	public void tearDown() throws Exception {
 	}
 
+//	@Test
+//	public void testUserRegister() 
+//	{
+//
+//		User user = new User();
+//		user.setEmail("test@testuser.com");
+//		user.setSsn("222-22-2222");
+//		user.setFirstName("Testy");
+//		user.setLastName("Testerton");
+//		user.setUsername("thisisatest");
+//		user.setPassword("testing");
+//		user.setDob("11-11-1990");
+//		user.setAddress("8110 Safari Dr Smyrna, TN");
+//		user.setPhone("6153333333");
+//		user.setType("test");
+//		
+//		assertTrue(us.registerUser(user)); //
+//		
+//		
+//	}
+	
 	@Test
-	public void testUserRegister() 
-	{
-
-		User user = new User();
-		user.setEmail("test@testuser.com");
-		user.setSsn("222-22-2222");
-		user.setFirstName("Testy");
-		user.setLastName("Testerton");
-		user.setUsername("thisisatest");
-		user.setPassword("testing");
-		user.setDob("11-11-1990");
-		user.setAddress("8110 Safari Dr Smyrna, TN");
-		user.setPhone("6153333333");
-		user.setType("test");
-		
-		assertTrue(us.registerUser(user)); //
-		
-		
-	}
-	
-	
 	public void testUserLogin() 
 	{
 		us = new UserService();
 		
-		us.loginUser("thisisatest");
+		us.loginUser("thisisatest", "testing");
 		
-		
+		//If all checks / queries pass this should ultimately be true
+		assertTrue(us.getUserInstance() instanceof User);
 		
 	}
 
