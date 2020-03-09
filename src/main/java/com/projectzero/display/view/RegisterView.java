@@ -94,11 +94,13 @@ public class RegisterView {
 			user.setPhone(phone);
 		}
 		
+		
+		//UserService call to register aka insert user in DB
 		if(us.registerUser(user))
 			System.out.println("User Successfully Registered");
+	
 		
 		return;
 		
 	}
-
 }

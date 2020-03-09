@@ -3,37 +3,43 @@ package com.projectzero.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import com.projectzero.model.User;
 
 public class UserDAOImpl implements UserDAO {
 
+	private Logger logger = Logger.getLogger(UserDAOImpl.class);
+	
+	
 	@Override
 	public boolean insert(User user) {
 		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
 
-			String sql = "INSERT INTO users (email, username, password, FIRST_NAME, LAST_NAME, SSN, dob, address, phone, user_type) VALUES(?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO users (email, username, password, first_name, last_name, ssn, dob, address, phone, user_type) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 
 			stmt.setString(1, user.getEmail());
 			stmt.setString(2, user.getUsername());
 			stmt.setString(3, user.getPassword());
-			stmt.setString(1, user.getFirstName());
-			stmt.setString(2, user.getLastName());
-			stmt.setString(3, user.getSsn());
-			stmt.setString(1, user.getDob());
-			stmt.setString(2, user.getAddress());
-			stmt.setString(3, user.getPhone());
-			stmt.setString(3, user.getType());
+			stmt.setString(4, user.getFirstName());
+			stmt.setString(5, user.getLastName());
+			stmt.setString(6, user.getSsn());
+			stmt.setString(7, user.getDob());
+			stmt.setString(8, user.getAddress());
+			stmt.setString(9, user.getPhone());
+			stmt.setString(10, user.getType());
 
-			return stmt.execute();
+			stmt.execute();
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -52,10 +58,23 @@ public class UserDAOImpl implements UserDAO {
 			// then return the object
 			ResultSet rs = stmt.executeQuery();
 			
-			user.setId(rs.getInt(0));
+			while(rs.next()) {
+				user.setId(rs.getInt(1));
+				user.setEmail(rs.getString(2));
+				user.setUsername(rs.getString(3));
+				user.setPassword(rs.getString(4));
+				user.setFirstName(rs.getString(5));
+				user.setLastName(rs.getString(6));
+				user.setSsn(rs.getString(7));
+				user.setDob(rs.getString(8));
+				user.setAddress(rs.getString(9));
+				user.setPhone(rs.getString(10));
+				user.setType(rs.getString(11));
+			}
 			
+			//Logger Info message here.
 			
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return user;

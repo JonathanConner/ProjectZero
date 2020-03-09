@@ -28,22 +28,31 @@ public class UserService {
 			return repo.insert(user); //User has been added to the database and can now be used.
 		}
 	
-		public User loginUser() {
+		/**
+		 * This finds the user in the database according to the user name 
+		 * and checks that the entered password matches the one in the DB.
+		 * 
+		 * If checks pass set the current user instance variable if not it remains NULL
+		 * 
+		 * @param username
+		 * @param password
+		 */
+		public void loginUser(String username, String password) {
 			
-			
-			
-			//Get user from the database and check passwords
-			System.out.println("Enter your Username: ");
-			String username = Main.sc.nextLine();
-			System.out.println("Enter your Password: ");
-			String password = Main.sc.nextLine();
 			
 			User user_tmp = repo.find(username);
+		
+			if(password == user_tmp.getPassword())
+			{
+				this.userInstance = user_tmp;	
+			} 
 			
-			return user_tmp;
 			
 			
 		}
 		
+		public User getUserInstance() {
+			return this.userInstance; 
+		}
 	
 }

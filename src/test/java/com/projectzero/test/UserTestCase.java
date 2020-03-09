@@ -42,6 +42,8 @@ public class UserTestCase {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		this.us = new UserService();
+
 	}
 
 	/**
@@ -55,8 +57,6 @@ public class UserTestCase {
 	public void testUserRegister() 
 	{
 
-		ConnectionUtil.getConnection();
-		us = new UserService();
 		User user = new User();
 		user.setEmail("test@testuser.com");
 		user.setSsn("222-22-2222");
@@ -68,7 +68,19 @@ public class UserTestCase {
 		user.setAddress("8110 Safari Dr Smyrna, TN");
 		user.setPhone("6153333333");
 		user.setType("test");
-		assertTrue(us.registerUser(user));
+		
+		assertTrue(us.registerUser(user)); //
+		
+		
+	}
+	
+	
+	public void testUserLogin() 
+	{
+		us = new UserService();
+		
+		us.loginUser("thisisatest");
+		
 		
 		
 	}
