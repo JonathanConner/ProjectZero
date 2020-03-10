@@ -58,26 +58,26 @@ public class UserTestCase {
 	public void tearDown() throws Exception {
 	}
 
-//	@Test
-//	public void testUserRegister() 
-//	{
-//
-//		User user = new User();
-//		user.setEmail("test@testuser.com");
-//		user.setSsn("222-22-2222");
-//		user.setFirstName("Testy");
-//		user.setLastName("Testerton");
-//		user.setUsername("thisisatest");
-//		user.setPassword("testing");
-//		user.setDob("11-11-1990");
-//		user.setAddress("8110 Safari Dr Smyrna, TN");
-//		user.setPhone("6153333333");
-//		user.setType("test");
-//		
-//		assertTrue(us.registerUser(user)); //
-//		
-//		
-//	}
+	@Test
+	public void testUserRegister() 
+	{
+
+		User user = new User();
+		user.setEmail("employee@employees.com");
+		user.setSsn("444-44-4444");
+		user.setFirstName("Cartoons");
+		user.setLastName("Plural");
+		user.setUsername("employee");
+		user.setPassword("testing");
+		user.setDob("11-11-1990");
+		user.setAddress("8110 Safari Dr Smyrna, TN");
+		user.setPhone("6153333333");
+		user.setType("employee");
+		
+		assertTrue(us.registerUser(user)); //
+		
+		
+	}
 	
 	@Test
 	public void testUserLogin() 

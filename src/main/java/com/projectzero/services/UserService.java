@@ -64,5 +64,10 @@ public class UserService {
 		}
 
 
+		public User findByUserName(String username) {
+			User user_tmp = repo.find(username);
+			user_tmp.setAccounts(repo.findUsersAccounts(user_tmp.getId()));
+			return user_tmp;
+		}
 	
 }
