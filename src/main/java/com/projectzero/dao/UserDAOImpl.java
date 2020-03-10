@@ -10,13 +10,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.projectzero.model.Account;
 import com.projectzero.model.User;
 
 public class UserDAOImpl implements UserDAO {
 
 	private Logger logger = Logger.getLogger(UserDAOImpl.class);
-	
-	
+
 	@Override
 	public boolean insert(User user) {
 		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
@@ -44,23 +44,57 @@ public class UserDAOImpl implements UserDAO {
 		return true;
 	}
 
+	public List<Account> findUsersAccounts(int userId) {
+
+		List<Account> list = new ArrayList<>();
+		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
+
+			String sql = "SELECT * FROM users_accounts_view WHERE user_id = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, userId);
+
+			// Get the result set and put the results into a user object
+			// then return the object
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Account a = new Account(rs.getInt("id"), rs.getInt("balance"));
+				a.setAccountNumber(rs.getInt("account_number"));
+				int stat_code = rs.getInt("approved");
+//			
+				if (stat_code == 1)
+					a.setStatus("approved");
+				else
+					a.setStatus("unapproved");
+				
+				list.add(a);
+			}
+		} catch (SQLException e) {
+				e.printStackTrace();
+		}
+		
+		return list;
+
+	}
+
 	@Override
 	public User find(String username) {
 
 		User user = new User();
 		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
 
-			String sql = "SELECT * FROM users WHERE username = ?";
-			
+			String sql = "SELECT * FROM users_accounts_view WHERE username = ?";
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			
+
 			stmt.setString(1, username);
-			
-			//Get the result set and put the results into a user object
+
+			// Get the result set and put the results into a user object
 			// then return the object
 			ResultSet rs = stmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				user.setId(rs.getInt(1));
 				user.setEmail(rs.getString(2));
 				user.setUsername(rs.getString(3));
@@ -73,31 +107,27 @@ public class UserDAOImpl implements UserDAO {
 				user.setPhone(rs.getString(10));
 				user.setType(rs.getString(11));
 			}
-			
-			
-			
-			//Logger Info message here.
-			
-		}catch (SQLException e) {
+
+			// Logger Info message here.
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return user;
 
 	}
 
-	
-	
 	@Override
 	public List<User> findAll() {
 
-		List<User> allUsers = new ArrayList<User>(); 
+		List<User> allUsers = new ArrayList<User>();
 		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
 
 			String sql = "SELECT * FROM users";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			//May need to sensor this if time permits
-			while(rs.next()) {
+			// May need to sensor this if time permits
+			while (rs.next()) {
 				User user = new User();
 				user.setId(rs.getInt(1));
 				user.setEmail(rs.getString(2));
@@ -112,10 +142,10 @@ public class UserDAOImpl implements UserDAO {
 				user.setType(rs.getString(11));
 				allUsers.add(user);
 			}
-		}catch(SQLException sqle) {
+		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
-		
+
 		return allUsers;
 	}
 

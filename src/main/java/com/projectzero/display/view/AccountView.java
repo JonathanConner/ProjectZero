@@ -3,11 +3,15 @@
  */
 package com.projectzero.display.view;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.projectzero.Main;
+import com.projectzero.dao.AccountDAOImpl;
 import com.projectzero.exception.InvalidCommandException;
+import com.projectzero.model.Account;
 import com.projectzero.model.User;
+import com.projectzero.services.AccountService;
 import com.projectzero.services.UserService;
 
 /**
@@ -22,12 +26,15 @@ import com.projectzero.services.UserService;
 public class AccountView extends View {
 
 	private UserService us;
-
-	public AccountView(UserService us) {
+	private AccountService as;
+	
+	public AccountView(UserService us, AccountService as) {
 		this.us = us;
+		this.as = as;
 
-		User user = us.getUserInstance();
-
+		User user = this.us.getUserInstance();
+		
+		System.out.println();
 		System.out.println("Hello, " + user.getFirstName() + " " + user.getLastName());
 
 		printAccountInfo(user);
@@ -40,20 +47,28 @@ public class AccountView extends View {
 
 	}
 
-	private void printAccountInfo(User user) {
+	public void printAccountInfo(User user) {
 		System.out.println("\tUsername :\t" + user.getUsername());
 		System.out.println("\tFull name:\t" + user.getFirstName() + " " + user.getLastName());
 		System.out.println("\tEmail    :\t" + user.getEmail());
 		System.out.println("\tDOB      :\t" + user.getDob());
 		System.out.println("\tAddress  :\t" + user.getAddress());
 		System.out.println("\tPhone    :\t" + user.getPhone());
-		System.out.println("\tAccount(s):\t");
-//		user.getAccounts().forEach((acc) -> System.out.println(acc));
+		System.out.println("\tAccount(s):");
+		
+		printAccounts(user);
+		
 	}
-	public void printMenu() {
-
-		System.out.println("Please enter a command.....");
+	
+	public void printAccounts(User user) {
 		System.out.println();
+		user.getAccounts().forEach((acc)->System.out.println(acc));
+		System.out.println();
+	}
+	
+	public void printMenu() {
+		System.out.println();
+		System.out.println("Please enter a command.....");
 		System.out.println("You have the following option(s)");
 		System.out.println();
 		System.out.println("\t[menu] - to show this menu");
@@ -62,6 +77,8 @@ public class AccountView extends View {
 		System.out.println("\t[deposit] - to deposit funds into an account");
 		System.out.println("\t[transfer] - to transfer funds");
 		System.out.println("\t[exit] - to return to login");
+		System.out.println();
+		System.out.println();
 		
 	}
 	private void handleUserInput() throws InvalidCommandException {
@@ -86,7 +103,7 @@ public class AccountView extends View {
 				this.accountWithdraw();
 				break;
 			case "deposit":
-				this.accountTransfer();
+				this.accountDeposit();
 				break;
 			case "exit":
 				return;
@@ -97,11 +114,52 @@ public class AccountView extends View {
 
 	}
 
+	private void accountDeposit() {
+
+		
+		printAccounts(this.us.getUserInstance());
+		
+		try {
+			//Process user input for passing to service layer
+			System.out.println("Enter an account number");
+			int accNum = Integer.parseInt(Main.sc.nextLine());
+			System.out.println("Enter an ammount to deposit");
+			double amount = Double.parseDouble(Main.sc.nextLine());
+			
+			AccountDAOImpl adi = new AccountDAOImpl();
+
+			adi.accountDeposit(accNum, amount);
+
+		} catch(NumberFormatException nfe) {
+			System.out.println("NumberFormatException: incorrect value supplied. Try again");
+		}
+			
+		
+	}
+
 	/**
 	 * This is a method to withdraw or simply subtract an amount from the account
 	 */
 	private void accountWithdraw() {
-
+		
+		printAccounts(this.us.getUserInstance());
+		
+		try {
+			//Process user input for passing to service layer
+			System.out.println("Enter an account number");
+			int accNum = Integer.parseInt(Main.sc.nextLine());
+			System.out.println("Enter an ammount to withdraw");
+			double amount = Double.parseDouble(Main.sc.nextLine());
+			
+			AccountDAOImpl adi = new AccountDAOImpl();
+			
+			
+			adi.processWithdrawal(accNum, amount);
+			
+			this.us.loginUser(this.us.getUserInstance().getUsername(), this.us.getUserInstance().getPassword()); // Re query and load a new updated user object with updated accounts
+		} catch(NumberFormatException nfe) {
+			System.out.println("NumberFormatException: incorrect value supplied. Try again");
+		}
 		
 	}
 
@@ -116,7 +174,13 @@ public class AccountView extends View {
 	private void accountApplication() {
 
 		System.out.println("Would you like to apply for an account? (Y/N)");
-		// Handle logic for adding a new unverified account
+		Account acc;
+		if(Main.sc.nextLine().equals("Y"))
+			 acc = this.as.applyForNewAccount(this.us.getUserInstance());
+			 System.out.println("Account created. Status is pending.");
+
+		//insert account id and user id into jt
+		
 		
 	}
 

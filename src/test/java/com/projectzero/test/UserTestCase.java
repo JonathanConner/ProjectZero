@@ -11,7 +11,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.projectzero.dao.AccountDAOImpl;
+import com.projectzero.model.Account;
 import com.projectzero.model.User;
+import com.projectzero.services.AccountService;
 import com.projectzero.services.UserService;
 import com.projectzero.util.ConnectionUtil;
 
@@ -22,6 +25,7 @@ import com.projectzero.util.ConnectionUtil;
 public class UserTestCase {
 
 	private UserService us;
+	private AccountService as;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -43,7 +47,8 @@ public class UserTestCase {
 	@Before
 	public void setUp() throws Exception {
 		this.us = new UserService();
-
+		this.as = new AccountService(new AccountDAOImpl());
+		
 	}
 
 	/**
@@ -77,12 +82,21 @@ public class UserTestCase {
 	@Test
 	public void testUserLogin() 
 	{
-		us = new UserService();
 		
-		us.loginUser("thisisatest", "testing");
+		this.us.loginUser("thisisatest", "testing");
 		
 		//If all checks / queries pass this should ultimately be true
-		assertTrue(us.getUserInstance() instanceof User);
+		assertTrue(this.us.getUserInstance() instanceof User);
+		
+	}
+	
+	@Test
+	public void testUserApplyForAccount() {
+		this.us.loginUser("thisisatest", "testing");
+		
+		Account acc = this.as.applyForNewAccount(this.us.getUserInstance());
+		
+		assertTrue(acc instanceof Account);
 		
 	}
 
