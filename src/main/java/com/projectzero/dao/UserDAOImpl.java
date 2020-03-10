@@ -72,6 +72,8 @@ public class UserDAOImpl implements UserDAO {
 				user.setType(rs.getString(11));
 			}
 			
+			
+			
 			//Logger Info message here.
 			
 		}catch (SQLException e) {

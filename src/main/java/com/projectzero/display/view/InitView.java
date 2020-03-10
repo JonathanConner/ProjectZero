@@ -18,7 +18,7 @@ public class InitView extends View {
 		System.out.println("------------------------------------");
 		System.out.println("\tWelcome to the Bank!\t");
 		System.out.println("------------------------------------");
-		System.out.println("Would you like to login or register?");
+		printMenu();
 		try {
 			this.handleUserInput();
 		} catch(InvalidCommandException ice) {
@@ -26,6 +26,10 @@ public class InitView extends View {
 		};
 	}
 
+	public void printMenu() {
+		System.out.println("Would you like to login or register?");
+	}
+	
 	public void handleUserInput() throws InvalidCommandException{
 		String input = Main.sc.nextLine();
 		

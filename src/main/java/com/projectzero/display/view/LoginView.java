@@ -4,6 +4,7 @@
 package com.projectzero.display.view;
 
 import com.projectzero.Main;
+import com.projectzero.services.AccountService;
 import com.projectzero.services.UserService;
 
 /**
@@ -26,8 +27,8 @@ public class LoginView {
 		
 		
 		if(us.getUserInstance()!=null) {
-			if(us.getUserInstance().getType() == "admin") {
-				//new AdminView(us); //Create an Admin View
+			if(us.getUserInstance().getType().equals("admin")) {
+				new AdminView(us, new AccountService()); //Create an Admin View
 			} else {
 				new AccountView(us);// Create a Standard Account View
 			}
@@ -36,6 +37,7 @@ public class LoginView {
 			return;
 		}
 		
+		return;
 		
 	}
 	

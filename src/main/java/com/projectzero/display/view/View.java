@@ -15,14 +15,7 @@ public abstract class View {
 		this.menuOptions = new ArrayList<MenuOption>();
 	}
 	
-	public void printMenu() {
-		
-		for(MenuOption mo: menuOptions) {
-			System.out.print(menuOptions.indexOf(mo)+". "+mo.toString());
-		}
-		
-	}
-	
+	public abstract void printMenu();
 	public void addMenuOption(MenuOption mo) {
 		menuOptions.add(mo);
 	}
