@@ -11,6 +11,11 @@ import com.projectzero.model.User;
 import com.projectzero.services.UserService;
 
 /**
+ * 
+ * 
+ * This is a view for Standard Users
+ * It helps control their access separately from any Admin functionality
+ * 
  * @author Jon
  *
  */
@@ -48,8 +53,13 @@ public class AccountView extends View {
 	public void printMenu() {
 
 		System.out.println("Please enter a command.....");
-		System.out.println("You have the option(s)");
-		System.out.println("\t[apply] - to apply for new account");
+		System.out.println();
+		System.out.println("You have the following option(s)");
+		System.out.println();
+		System.out.println("\t[menu] - to show this menu");
+		System.out.println("\t[show info] - to show user information");
+		System.out.println("\t[withdraw] - to withdraw funds from an account");
+		System.out.println("\t[deposit] - to deposit funds into an account");
 		System.out.println("\t[transfer] - to transfer funds");
 		System.out.println("\t[exit] - to return to login");
 		
@@ -60,22 +70,27 @@ public class AccountView extends View {
 			String input = Main.sc.nextLine();
 
 			switch (input) {
+			case "menu" : 
+				this.printMenu();
+				break;
+			case "show info":
+				this.printAccountInfo(this.us.getUserInstance());
+				break;
 			case "apply":
 				this.accountApplication();
 				break;
 			case "transfer":
 				this.accountTransfer();
 				break;
-
 			case "withdraw":
 				this.accountWithdraw();
 				break;
-
 			case "deposit":
 				this.accountTransfer();
 				break;
 			case "exit":
-				break;
+				return;
+			default: throw new InvalidCommandException();
 			}
 
 		}

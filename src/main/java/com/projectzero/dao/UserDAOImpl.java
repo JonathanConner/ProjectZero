@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -87,8 +89,34 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<User> allUsers = new ArrayList<User>(); 
+		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
+
+			String sql = "SELECT * FROM users";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			//May need to sensor this if time permits
+			while(rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt(1));
+				user.setEmail(rs.getString(2));
+				user.setUsername(rs.getString(3));
+				user.setPassword(rs.getString(4));
+				user.setFirstName(rs.getString(5));
+				user.setLastName(rs.getString(6));
+				user.setSsn(rs.getString(7));
+				user.setDob(rs.getString(8));
+				user.setAddress(rs.getString(9));
+				user.setPhone(rs.getString(10));
+				user.setType(rs.getString(11));
+				allUsers.add(user);
+			}
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		
+		return allUsers;
 	}
 
 }

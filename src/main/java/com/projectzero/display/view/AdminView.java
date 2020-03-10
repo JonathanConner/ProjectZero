@@ -13,7 +13,7 @@ public class AdminView extends View {
 		this.us = us;
 		this.as = as;
 
-		System.out.println("ADMIN ACCESS GRANTED!");
+		System.out.println("\n\tBANK ADMIN ACCESS GRANTED!");
 
 		try {
 			this.handleUserInput();
@@ -27,6 +27,7 @@ public class AdminView extends View {
 		System.out.println("Please enter a command.....");
 		System.out.println();
 		System.out.println("You have the following option(s)");
+		System.out.println();
 		System.out.println("\t[view all] - to view all accounts");
 		System.out.println("\t[modify user] - to modify any user's information");
 		System.out.println("\t[review] - to review a particular account application");
@@ -65,12 +66,17 @@ public class AdminView extends View {
 	 * Handles logic for approving any accounts
 	 */
 	private void reviewAccount() {
-		printPendingAccounts();
+		
+		printPendingAccounts(); // go ahead and print the pending accounts for ease of use
+		
 		System.out.println("Please enter an account ID you wish to approve...");
 		
-		int parsedInt = Integer.parseInt(Main.sc.nextLine());
-		this.as.approveAccountStatus(parsedInt);
-		
+		try {
+			int parsedInt = Integer.parseInt(Main.sc.nextLine());
+			this.as.approveAccountStatus(parsedInt);
+		}catch(NumberFormatException nfe) {
+			System.out.println("NumberFormatException: Invalid ID format entered!");
+		}
 	}
 
 	/**
@@ -80,11 +86,22 @@ public class AdminView extends View {
 		this.as.findAllPendingAccounts().forEach((pending) -> {
 			System.out.println(pending);
 		});
-
 	}
 
+	/**
+	 * Helper method to loop over and print all users
+	 */
+	private void printUsers() {
+		this.us.findAll().forEach((accs)->{
+			System.out.println(accs);
+		});
+	}
+	
+	
 	private void modifyUser() {
-
+		printUsers();
+		System.out.println();
+		System.out.println("Please enter a user ID to modify.");
 	}
 
 	/**
