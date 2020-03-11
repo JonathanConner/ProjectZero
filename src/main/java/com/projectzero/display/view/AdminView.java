@@ -60,7 +60,7 @@ public class AdminView extends View {
 
 	}
 
-	public void removeAccount() {
+	private void removeAccount() {
 		viewAllAccounts();
 
 		int accId;
@@ -125,7 +125,7 @@ public class AdminView extends View {
 
 	}
 
-	public void accountDeposit() {
+	private void accountDeposit() {
 
 		viewAllAccounts();
 

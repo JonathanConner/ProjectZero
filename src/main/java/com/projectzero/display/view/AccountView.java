@@ -51,7 +51,7 @@ public class AccountView extends View {
 
 	}
 
-	public void printAccountInfo(User user) {
+	private void printAccountInfo(User user) {
 		System.out.println();
 		System.out.println("\tUsername :\t" + user.getUsername());
 		System.out.println("\tFull name:\t" + user.getFirstName() + " " + user.getLastName());
@@ -69,7 +69,7 @@ public class AccountView extends View {
 	 * Print out the current state of accounts for the user.
 	 * @param user
 	 */
-	public void printAccounts(User user) {
+	private void printAccounts(User user) {
 		
 		user.setAccounts(this.us.findUsersAccounts(user.getId())); //set user accounts to new object
 		
@@ -78,7 +78,7 @@ public class AccountView extends View {
 		System.out.println();
 	}
 
-	public void handleUserInput() throws InvalidCommandException {
+	private void handleUserInput() throws InvalidCommandException {
 		printMenu();
 		while (Main.sc.hasNext()) {
 			String input = Main.sc.nextLine();
@@ -115,7 +115,7 @@ public class AccountView extends View {
 
 	}
 
-	public void accountDeposit() {
+	private void accountDeposit() {
 
 		printAccounts(this.us.getUserInstance());
 
