@@ -81,7 +81,8 @@ public class AccountView extends View {
 		System.out.println();
 		
 	}
-	private void handleUserInput() throws InvalidCommandException {
+	
+	public void handleUserInput() throws InvalidCommandException {
 		printMenu();
 		while (Main.sc.hasNext()) {
 			String input = Main.sc.nextLine();
@@ -114,7 +115,7 @@ public class AccountView extends View {
 
 	}
 
-	private void accountDeposit() {
+	public void accountDeposit() {
 
 		
 		printAccounts(this.us.getUserInstance());
@@ -167,18 +168,37 @@ public class AccountView extends View {
 	 * Transfer money between two accounts
 	 */
 	private void accountTransfer() {
-		// TODO Auto-generated method stub
-
+		
+		printAccounts(this.us.getUserInstance());
+		
+		
+		try {
+			//Process user input for passing to service layer
+			System.out.println("Enter an account ID to transfer FROM (source)");
+			int sourceAccount = Integer.parseInt(Main.sc.nextLine());
+			System.out.println("Enter an account ID to transfer TO (destination)");
+			int targetAccount = Integer.parseInt(Main.sc.nextLine());
+			System.out.println("Enter the ammount:");
+			double amount = Double.parseDouble(Main.sc.nextLine());
+			
+			this.as.transfer(sourceAccount, targetAccount, amount);
+			
+		} catch(NumberFormatException nfe) {
+			System.out.println("NumberFormatException: incorrect value supplied. Try again");
+		}
+			
+		
 	}
 
 	private void accountApplication() {
 
 		System.out.println("Would you like to apply for an account? (Y/N)");
 		Account acc;
-		if(Main.sc.nextLine().equals("Y"))
+		if(Main.sc.nextLine().equals("Y")) {
 			 acc = this.as.applyForNewAccount(this.us.getUserInstance());
 			 System.out.println("Account created. Status is pending.");
-
+		}
+		
 		//insert account id and user id into jt
 		
 		

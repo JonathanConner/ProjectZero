@@ -99,7 +99,7 @@ public class EmployeeView extends View {
 		System.out.println("You have the following option(s)");
 		System.out.println();
 		System.out.println("\t[view user] - show specific user info");
-		System.out.println("\t[view accounts] - view all accounts");
+		System.out.println("\t[view all] - view all accounts");
 		System.out.println("\t[review] - to review a particular account application");
 		System.out.println("\t[exit] - to return to login");
 		System.out.println();

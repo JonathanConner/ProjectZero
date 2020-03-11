@@ -19,22 +19,29 @@ public class AccountDAOImpl implements AccountDAO {
 
 	
 	
+	/**
+	 * Transfers the amount between two accounts given their IDs
+	 * @param source
+	 * @param target
+	 * @param ammount
+	 * @return
+	 */
 	@Override
-	public boolean transfer(Account source, Account target, double ammount) {
-//		try (Connection conn = ConnectionUtil.getConnection()) {
-//
-//			String sql = "{ call transfer_funds(?,?,?) }";
-//
-//			Statement st = conn.createStatement();
-//			st.setInt(1, source.getOwner().getEmployeeId());
-//			st.setInt(2, target.getOwner().getEmployeeId());
-//			st.setDouble(3, amount);
-//
-//			return stmt.execute();
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+	public boolean transfer(int source, int target, double ammount) {
+		
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "{ call transfer_funds(?,?,?) }";
+
+			CallableStatement st = conn.prepareCall(sql);
+			st.setInt(1, source);
+			st.setInt(2, target);
+			st.setDouble(3, ammount);
+
+			return st.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 
 	}

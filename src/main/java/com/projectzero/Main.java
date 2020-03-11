@@ -21,22 +21,9 @@ public class Main {
 
 		sc = new Scanner(System.in);
 		
-
 		while (running) {
-
-			
-			
+			//Initialize the program with a view
 			new InitView();
-			
-			/*
-			 * while (!(sc.nextLine().isEmpty())) { // This will process menu options
-			 * submitted through scanner. try { int in = Integer.parseInt(sc.nextLine());
-			 * switch (in) { case 1: setView(new AccountView()); break; case 0: exit();
-			 * break; default: throw new InvalidCommandException(); } } catch
-			 * (InvalidCommandException ice) { System.out.println(ice.getMessage()); // TODO
-			 * Replace with Logger in Log4j } break;
-			 */
-			
 		}
 	}
 

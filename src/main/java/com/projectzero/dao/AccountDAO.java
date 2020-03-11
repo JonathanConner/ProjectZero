@@ -7,19 +7,20 @@ import com.projectzero.model.User;
 
 public interface AccountDAO {
 
-	public boolean transfer(Account source, Account target, double ammount);
-	
+//	public boolean transfer(Account source, Account target, double ammount);
+
 	public List<Account> findAll();
+
 	public List<Account> findAllPendingAccounts();
 
 	public boolean approveAccountStatus(int account_id);
-	
+
 	public Account insert();
-	
+
 	public int insertIntoJoinTable(Account acc, User user);
-	
-	
+
 	public Account findByAccountNumber(int accNum);
 
-	
+	boolean transfer(int source, int target, double ammount);
+
 }
