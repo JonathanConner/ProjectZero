@@ -46,6 +46,22 @@ public class AccountDAOImpl implements AccountDAO {
 
 	}
 
+	public boolean removeAccount(int account_id) {
+		
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "{ call delete_account(?) }";
+
+			CallableStatement st = conn.prepareCall(sql);
+			st.setInt(1, account_id);
+
+			return st.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
 	
 
 	public boolean processWithdrawal(int accountNumber, double amount) {

@@ -57,27 +57,27 @@ public class UserTestCase {
 	@After
 	public void tearDown() throws Exception {
 	}
-
-	@Test
-	public void testUserRegister() 
-	{
-
-		User user = new User();
-		user.setEmail("jonn");
-		user.setSsn("");
-		user.setFirstName("Cartoons");
-		user.setLastName("Plural");
-		user.setUsername("employee");
-		user.setPassword("testing");
-		user.setDob("11-11-1990");
-		user.setAddress("8110 Safari Dr Smyrna, TN");
-		user.setPhone("6153333333");
-		user.setType("test");
-		
-		assertTrue(us.registerUser(user)); //
-		
-		
-	}
+//
+//	@Test
+//	public void testUserRegister() 
+//	{
+//
+//		User user = new User();
+//		user.setEmail("jonn");
+//		user.setSsn("");
+//		user.setFirstName("Cartoons");
+//		user.setLastName("Plural");
+//		user.setUsername("employee");
+//		user.setPassword("testing");
+//		user.setDob("11-11-1990");
+//		user.setAddress("8110 Safari Dr Smyrna, TN");
+//		user.setPhone("6153333333");
+//		user.setType("test");
+//		
+//		assertTrue(us.registerUser(user)); //
+//		
+//		
+//	}
 	
 	@Test
 	public void testUserLogin() 
@@ -108,5 +108,25 @@ public class UserTestCase {
 		assertTrue(this.us.applyForNewJointAccount(this.us.getUserInstance(), "jonconner"));
 		
 	}
+	
+	@Test
+	public void testFindByUsername() {
+		
+		User user = this.us.findByUserName("thisisatest");
+		
+		assertTrue(user instanceof User);
 
+	}
+	
+	@Test
+	public void testUpdateUserAccountsList()
+	{
+		this.us.loginUser("thisisatest", "password");
+		User tmp_user = this.us.getUserInstance();
+		
+		this.us.applyForNewAccount(this.us.getUserInstance());
+		this.us.updateUserAccountsList(this.us.getUserInstance().getUsername());
+
+		assertTrue(this.us.getUserInstance().getAccounts().size() != tmp_user.getAccounts().size());
+	}
 }

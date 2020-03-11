@@ -20,10 +20,14 @@ public class AdminView extends View {
 		this.us = us;
 		this.as = as;
 
-		System.out.println("\nBANK ADMIN ACCESS GRANTED!");
+		logger.info("\nBANK ADMIN ACCESS GRANTED!");
 
-		this.handleUserInput();
+		try {
 
+			this.handleUserInput();
+		} catch (InvalidCommandException ice) {
+			System.out.println(ice.getMessage());
+		}
 	}
 
 	/**
@@ -56,7 +60,25 @@ public class AdminView extends View {
 
 	}
 
+	public void removeAccount() {
+		viewAllAccounts();
 
+		int accId;
+
+		try {
+			// Process user input for passing to service layer
+			System.out.println("Enter an account ID to REMOVE the account:");
+			accId = Integer.parseInt(Main.sc.nextLine());
+
+			this.as.removeAccount(accId);
+			
+			logger.info("Account " + accId + " was removed!");
+
+		} catch (NumberFormatException nfe) {
+			System.out.println("NumberFormatException: incorrect value supplied. Try again");
+		}
+	}
+	
 	private void handleUserInput() throws InvalidCommandException {
 
 		printMenu();
@@ -69,6 +91,9 @@ public class AdminView extends View {
 				break;
 			case "view all users":
 				this.viewAllUsers();
+				break;
+			case "remove account":
+				this.removeAccount();
 				break;
 			case "review":
 				this.reviewAccount();
@@ -106,7 +131,7 @@ public class AdminView extends View {
 
 		try {
 			// Process user input for passing to service layer
-			System.out.println("Enter an account ID");
+			System.out.println("Enter an account number");
 			int accNum = Integer.parseInt(Main.sc.nextLine());
 			System.out.println("Enter an ammount to deposit");
 			double amount = Double.parseDouble(Main.sc.nextLine());
@@ -139,20 +164,7 @@ public class AdminView extends View {
 
 			adi.processWithdrawal(accNum, amount);
 
-			logger.info("Account Withdrawal from Account " + accNum +" was SUCCESSFUL!");
-
-			this.us.loginUser(this.us.getUserInstance().getUsername(), this.us.getUserInstance().getPassword()); // Re
-																													// query
-																													// and
-																													// load
-																													// a
-																													// new
-																													// updated
-																													// user
-																													// object
-																													// with
-																													// updated
-																													// accounts
+			logger.info("Account Withdrawal from Account " + accNum + " was SUCCESSFUL!");
 
 		} catch (NumberFormatException nfe) {
 			System.out.println("NumberFormatException: incorrect value supplied. Try again");
@@ -167,11 +179,12 @@ public class AdminView extends View {
 
 		printPendingAccounts(); // go ahead and print the pending accounts for ease of use
 
-		System.out.println("Please enter an account ID you wish to approve...");
+		System.out.println("Please enter an account number you wish to approve...");
 
 		try {
 			int parsedInt = Integer.parseInt(Main.sc.nextLine());
 			this.as.approveAccountStatus(parsedInt);
+			logger.info("Account approved!");
 		} catch (NumberFormatException nfe) {
 			System.out.println("NumberFormatException: Invalid ID format entered!");
 		}
@@ -221,11 +234,10 @@ public class AdminView extends View {
 			System.out.println(u);
 		});
 	}
-	
-	
-	
-	
+
 	public void printMenu() {
+
+		System.out.println();
 		System.out.println("Please enter a command.....");
 		System.out.println();
 		System.out.println("You have the following option(s)");
@@ -233,6 +245,7 @@ public class AdminView extends View {
 		System.out.println("\t[view all accounts] - to view all accounts");
 		System.out.println("\t[view all users] - to view all users");
 		System.out.println("\t[review] - to review a particular account application");
+		System.out.println("\t[remove account] - to remove a specific account");
 		System.out.println("\t[withdraw] - to withdraw funds from an account");
 		System.out.println("\t[deposit] - to deposit funds into an account");
 		System.out.println("\t[transfer] - to transfer funds");

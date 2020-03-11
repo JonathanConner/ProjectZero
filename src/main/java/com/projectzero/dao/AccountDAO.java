@@ -27,4 +27,6 @@ public interface AccountDAO {
 
 	boolean applyForNewJointAccount(int userid1, int userid2);
 
+	public boolean removeAccount(int account_id);
+
 }

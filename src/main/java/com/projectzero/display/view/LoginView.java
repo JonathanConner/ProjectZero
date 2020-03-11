@@ -48,13 +48,16 @@ public class LoginView {
 				logger.info("Opening standard account view...");
 				new AccountView(us, new AccountService());// Create a Standard Account View
 			}
+			if(us.getUserInstance().getType().equals("user")){
+//				{
+				logger.info("Opening standard account view...");
+				new AccountView(us, new AccountService());// Create a Standard Account View
+			}
 		} else {
 			logger.error("Login failed! Try again.");
 			return;
 		}
-		
-		return;
-		
+				
 	}
 	
 	

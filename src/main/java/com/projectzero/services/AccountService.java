@@ -50,6 +50,13 @@ public class AccountService {
 		return this.repo.transfer(source, target, amount);
 	}
 	
+	public boolean removeAccount(int account_id) {
+		
+		return this.repo.removeAccount(account_id);
+		
+	}
+	
+	
 	public List<Account> findAll() {
 		return this.repo.findAll();
 	}
@@ -58,10 +65,6 @@ public class AccountService {
 
 	public void insert(Account e) {
 		this.repo.insert();
-	}
-	
-	public void accountDeposit() {
-		
 	}
 	
 }
