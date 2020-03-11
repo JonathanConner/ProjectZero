@@ -43,7 +43,16 @@ public class Account {
 	
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", account_number="+account_number +", balance=" + balance + ", status=" + status + "]";
+		String str = "\nAccount [id: " + id + ", account_number: "+account_number +", balance: " + balance + ", status: " + status + "]";
+		for(int i = 0; i <= str.length(); i++) {
+			System.out.print("-");	
+		}
+		return str;
+	}
+	
+	public int getAccountNumber() {
+		return this.account_number;
+		
 	}
 	
 	public void setAccountNumber(int accNum) {

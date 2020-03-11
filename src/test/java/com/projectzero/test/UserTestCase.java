@@ -63,8 +63,8 @@ public class UserTestCase {
 	{
 
 		User user = new User();
-		user.setEmail("employee@employees.com");
-		user.setSsn("444-44-4444");
+		user.setEmail("jonn");
+		user.setSsn("");
 		user.setFirstName("Cartoons");
 		user.setLastName("Plural");
 		user.setUsername("employee");
@@ -72,7 +72,7 @@ public class UserTestCase {
 		user.setDob("11-11-1990");
 		user.setAddress("8110 Safari Dr Smyrna, TN");
 		user.setPhone("6153333333");
-		user.setType("employee");
+		user.setType("test");
 		
 		assertTrue(us.registerUser(user)); //
 		
@@ -92,11 +92,20 @@ public class UserTestCase {
 	
 	@Test
 	public void testUserApplyForAccount() {
+		
 		this.us.loginUser("thisisatest", "testing");
 		
-		Account acc = this.as.applyForNewAccount(this.us.getUserInstance());
+		assertTrue(this.us.applyForNewAccount(this.us.getUserInstance()));
 		
-		assertTrue(acc instanceof Account);
+	}
+	
+	
+	@Test
+	public void testUserApplyForJointAccount() {
+		
+		this.us.loginUser("thisisatest", "testing");
+		
+		assertTrue(this.us.applyForNewJointAccount(this.us.getUserInstance(), "jonconner"));
 		
 	}
 

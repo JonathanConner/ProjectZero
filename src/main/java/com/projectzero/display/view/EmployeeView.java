@@ -48,27 +48,26 @@ public class EmployeeView extends View {
 			case "exit":
 				return;
 			default:
-				throw new InvalidCommandException();
+				throw new InvalidCommandException("ICE: You entered an invalid command, please try again!");
 			}
 
 		}
 
 	}
-	
 
 	/**
 	 * Handles logic for approving any accounts
 	 */
 	private void reviewAccount() {
-		
+
 		printPendingAccounts(); // go ahead and print the pending accounts for ease of use
-		
+
 		System.out.println("Please enter an account ID you wish to approve...");
-		
+
 		try {
 			int parsedInt = Integer.parseInt(Main.sc.nextLine());
 			this.as.approveAccountStatus(parsedInt);
-		}catch(NumberFormatException nfe) {
+		} catch (NumberFormatException nfe) {
 			System.out.println("NumberFormatException: Invalid ID format entered!");
 		}
 	}
@@ -81,6 +80,7 @@ public class EmployeeView extends View {
 			System.out.println(pending);
 		});
 	}
+
 	/**
 	 * Grab all accounts and iterate the results to screen
 	 */
@@ -90,20 +90,6 @@ public class EmployeeView extends View {
 			System.out.println(acc);
 		});
 
-	}
-
-	@Override
-	public void printMenu() {
-		System.out.println();
-		System.out.println("Please enter a command.....");
-		System.out.println("You have the following option(s)");
-		System.out.println();
-		System.out.println("\t[view user] - show specific user info");
-		System.out.println("\t[view all] - view all accounts");
-		System.out.println("\t[review] - to review a particular account application");
-		System.out.println("\t[exit] - to return to login");
-		System.out.println();
-		System.out.println();
 	}
 
 	public void viewUser() {
@@ -129,6 +115,20 @@ public class EmployeeView extends View {
 	public void printAccounts(User user) {
 		System.out.println();
 		user.getAccounts().forEach((acc) -> System.out.println(acc));
+		System.out.println();
+	}
+
+	@Override
+	public void printMenu() {
+		System.out.println();
+		System.out.println("Please enter a command.....");
+		System.out.println("You have the following option(s)");
+		System.out.println();
+		System.out.println("\t[view user] - show specific user info");
+		System.out.println("\t[view all] - view all accounts");
+		System.out.println("\t[review] - to review a particular account application");
+		System.out.println("\t[exit] - to return to login");
+		System.out.println();
 		System.out.println();
 	}
 

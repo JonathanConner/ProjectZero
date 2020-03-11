@@ -5,6 +5,7 @@ import java.util.List;
 import com.projectzero.Main;
 import com.projectzero.dao.UserDAO;
 import com.projectzero.dao.UserDAOImpl;
+import com.projectzero.model.Account;
 import com.projectzero.model.User;
 
 public class UserService {
@@ -41,7 +42,7 @@ public class UserService {
 			
 			
 			User user_tmp = repo.find(username);
-		
+			
 			user_tmp.setAccounts(repo.findUsersAccounts(user_tmp.getId()));
 			
 			System.out.println("Login Successful");	
@@ -50,6 +51,24 @@ public class UserService {
 			//Set the users accounts list
 
 		}
+		
+		public boolean applyForNewAccount(User user) {
+			this.repo.applyForNewAccount(user.getId());
+			return true;
+			
+		}
+		
+		public boolean applyForNewJointAccount(User user, String username) {
+			
+			User user2 = findByUserName(username);
+			
+			this.repo.applyForNewJointAccount(user.getId(), user2.getId());
+			
+			return true;
+		
+		}
+		
+		
 		
 		public void updateUserAccountsList(String username) {
 		
@@ -68,6 +87,10 @@ public class UserService {
 			User user_tmp = repo.find(username);
 			user_tmp.setAccounts(repo.findUsersAccounts(user_tmp.getId()));
 			return user_tmp;
+		}
+		
+		public List<Account> findUsersAccounts(int userid){
+			return this.repo.findUsersAccounts(userid);
 		}
 	
 }

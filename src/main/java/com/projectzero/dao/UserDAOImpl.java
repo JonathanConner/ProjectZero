@@ -1,5 +1,6 @@
 package com.projectzero.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,11 +8,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
 import com.projectzero.model.Account;
 import com.projectzero.model.User;
+import com.projectzero.util.ConnectionUtil;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -21,7 +24,7 @@ public class UserDAOImpl implements UserDAO {
 	public boolean insert(User user) {
 		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
 
-			String sql = "INSERT INTO users (email, username, password, first_name, last_name, ssn, dob, address, phone, user_type) VALUES(?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO users (email, username, password, first_name, last_name, ssn, dob, address, phone, user_type) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -36,12 +39,69 @@ public class UserDAOImpl implements UserDAO {
 			stmt.setString(9, user.getPhone());
 			stmt.setString(10, user.getType());
 
-			stmt.execute();
+			return stmt.execute();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return true;
+	}
+
+	/**
+	 * Utility method for generating a random account number
+	 * 
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public int generateAccountNumber(int min, int max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
+
+	}
+
+	@Override
+	public boolean applyForNewAccount(int id) {
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "{ call insert_new_account(?,?) }";
+
+			CallableStatement st = conn.prepareCall(sql);
+			st.setInt(1, this.generateAccountNumber(100000000, 999999999));
+			st.setInt(2, id);
+
+			return !st.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+
+	@Override
+	public boolean applyForNewJointAccount(int userid1, int userid2) {
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "{ call insert_new_joint_account(?,?, ?) }";
+
+			CallableStatement st = conn.prepareCall(sql);
+			st.setInt(1, this.generateAccountNumber(100000000, 999999999));
+			st.setInt(2, userid1);
+			st.setInt(3, userid2);
+
+			return !st.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+
 	}
 
 	public List<Account> findUsersAccounts(int userId) {
@@ -67,13 +127,13 @@ public class UserDAOImpl implements UserDAO {
 					a.setStatus("approved");
 				else
 					a.setStatus("unapproved");
-				
+
 				list.add(a);
 			}
 		} catch (SQLException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		}
-		
+
 		return list;
 
 	}
@@ -84,7 +144,7 @@ public class UserDAOImpl implements UserDAO {
 		User user = new User();
 		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
 
-			String sql = "SELECT * FROM users_accounts_view WHERE username = ?";
+			String sql = "SELECT * FROM users WHERE username = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 

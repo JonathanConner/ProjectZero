@@ -26,10 +26,6 @@ public class InitView extends View {
 		};
 	}
 
-	public void printMenu() {
-		System.out.println("Would you like to login or register?");
-	}
-	
 	public void handleUserInput() throws InvalidCommandException{
 		String input = Main.sc.nextLine();
 		
@@ -38,9 +34,14 @@ public class InitView extends View {
 					break;
 			case "register": new RegisterView(new UserService());
 					break;
-			default: throw new InvalidCommandException();
+			default: throw new InvalidCommandException("ICE: Invalid command entered! Please try again...");
 		}
 		
+	}
+	
+
+	public void printMenu() {
+		System.out.println("Would you like to login or register?");
 	}
 	
 	

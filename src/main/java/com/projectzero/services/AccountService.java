@@ -55,12 +55,7 @@ public class AccountService {
 	}
 
 	
-	public Account applyForNewAccount(User user) {
-		Account acc = this.repo.insert();
-		this.repo.insertIntoJoinTable(acc, user);
-		return acc;
-		
-	}
+
 	public void insert(Account e) {
 		this.repo.insert();
 	}

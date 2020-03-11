@@ -12,7 +12,7 @@ public class RegisterView {
 		
 		User user = new User();//Create a user object
 		
-		user.setType("user");
+		user.setType("test");
 		/*
 			Ask for required information to create account and check the input lengths
 		*/
@@ -54,7 +54,7 @@ public class RegisterView {
 		if(!(lname.length()<=30)){
 			System.out.println("Last Name must not be over 30 characters!");
 		} else {
-			user.setFirstName(lname);
+			user.setLastName(lname);
 		}
 		
 		System.out.println("Enter your Date Of Birth (mm-dd-yyyy):");
@@ -86,7 +86,6 @@ public class RegisterView {
 		
 		System.out.println("Enter your Phone Number:");
 		String phone  = Main.sc.nextLine();
-
 
 		if(!(phone.length()<=15)){
 			System.out.println("Phone too long!");

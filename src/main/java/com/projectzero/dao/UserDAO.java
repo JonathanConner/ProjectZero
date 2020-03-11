@@ -13,5 +13,7 @@ public interface UserDAO {
 		public List<User> findAll();
 		
 		public List<Account> findUsersAccounts(int userId);
+		boolean applyForNewAccount(int id);
+		boolean applyForNewJointAccount(int userid1, int userid2);
 
 }

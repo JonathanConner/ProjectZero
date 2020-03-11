@@ -193,9 +193,14 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", type="
+		String str =  "\nUser [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", type="
 				+ type + ", fristName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", dob=" + dob
 				+ ", phone=" + phone + ", ssn=" + ssn + ", accounts=" + accounts + "]";
+	
+		for(int i = 0; i <= str.length(); i++) {
+			System.out.print("-");	
+		}
+		return str;
 	}
 
 

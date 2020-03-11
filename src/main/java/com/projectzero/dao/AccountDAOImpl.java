@@ -46,6 +46,33 @@ public class AccountDAOImpl implements AccountDAO {
 
 	}
 
+	
+
+	public boolean processWithdrawal(int accountNumber, double amount) {
+//
+//
+		
+		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
+
+			
+			String sql = "UPDATE account SET balance = balance - ? WHERE account_number = ?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+
+			stmt.setDouble(1, amount);
+			stmt.setInt(2, accountNumber);
+			
+			stmt.executeUpdate();
+			
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		
+		System.out.println("Account Number " + accountNumber +" withdrawal complete!");
+		return true;
+		
+	}
+	
 	public boolean accountDeposit(int accNum, double amount) {
 		
 		try (Connection conn = ConnectionUtil.getConnection()) {
@@ -67,7 +94,12 @@ public class AccountDAOImpl implements AccountDAO {
 		return true;
 	}
 	
-	
+	/**
+	 * Utility method for generating a random account number
+	 * @param min
+	 * @param max
+	 * @return
+	 */
 	public int generateAccountNumber(int min, int max) {
 
 			if (min >= max) {
@@ -122,9 +154,10 @@ public class AccountDAOImpl implements AccountDAO {
 				int id = rs.getInt("id");
 				double balance = rs.getDouble("balance");
 				int stat_code = rs.getInt("approved");
-//				
+				
+				int accountNumber = rs.getInt("account_number");
 				Account a = new Account(id, balance);
-
+				a.setAccountNumber(accountNumber);
 				if(stat_code == 1)
 						a.setStatus("approved");
 				else
@@ -159,7 +192,7 @@ public class AccountDAOImpl implements AccountDAO {
 //				
 				int accountNumber = rs.getInt("account_number");
 				Account a = new Account(id, balance);
-
+				a.setAccountNumber(accountNumber);
 				if(stat_code == 1)
 						a.setStatus("approved");
 				else
@@ -175,17 +208,17 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public boolean approveAccountStatus(int account_id) {
+	public boolean approveAccountStatus(int accountNum) {
 
 		
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
 		    String sql = "UPDATE account " +
-		                  "SET approved = 1 WHERE id = ?";
+		                  "SET approved = 1 WHERE account_number = ?";
 			
 		    PreparedStatement stmt = conn.prepareStatement(sql); // Create a prepared statement to update an accounts status
 			
-			stmt.setInt(1, account_id);
+			stmt.setInt(1, accountNum);
 		    stmt.executeUpdate();
 //
 		    	
@@ -195,31 +228,6 @@ public class AccountDAOImpl implements AccountDAO {
 		return true;
 	}
 	
-	public boolean processWithdrawal(int accountNumber, double amount) {
-//
-//
-		
-		
-		try (Connection conn = com.projectzero.util.ConnectionUtil.getConnection()) {
-
-			
-			String sql = "UPDATE account SET balance = balance - ? WHERE account_number = ?";
-
-			PreparedStatement stmt = conn.prepareStatement(sql);
-
-			stmt.setDouble(1, amount);
-			stmt.setInt(2, accountNumber);
-			
-			stmt.executeUpdate();
-			
-		}catch(SQLException sqle) {
-			sqle.printStackTrace();
-		}
-		
-		System.out.println("Account Number " + accountNumber +" withdrawal complete!");
-		return true;
-		
-	}
 
 	@Override
 	public Account findByAccountNumber(int accNum) {
@@ -253,6 +261,51 @@ public class AccountDAOImpl implements AccountDAO {
 		
 		return 0;
 	}
+
+
+
+	@Override
+	public boolean applyForNewAccount(int id) {
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "{ call insert_new_account(?,?) }";
+
+			CallableStatement st = conn.prepareCall(sql);
+			st.setInt(1, this.generateAccountNumber(100000000, 999999999));
+			st.setInt(2, id);
+
+			return !st.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+		
+	}
+	
+	
+	@Override
+	public boolean applyForNewJointAccount(int userid1, int userid2) {
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			String sql = "{ call insert_new_joint_account(?,?, ?) }";
+
+			CallableStatement st = conn.prepareCall(sql);
+			st.setInt(1, this.generateAccountNumber(100000000, 999999999));
+			st.setInt(2, userid1);
+			st.setInt(3, userid2);
+
+			return !st.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+		
+	}
+	
 	
 //	public Account findByAccountNumber(int accountNumber) {
 //	

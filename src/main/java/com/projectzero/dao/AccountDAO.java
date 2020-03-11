@@ -23,4 +23,8 @@ public interface AccountDAO {
 
 	boolean transfer(int source, int target, double ammount);
 
+	public boolean applyForNewAccount(int id);
+
+	boolean applyForNewJointAccount(int userid1, int userid2);
+
 }
