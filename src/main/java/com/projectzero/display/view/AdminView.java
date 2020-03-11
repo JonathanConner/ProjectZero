@@ -20,7 +20,7 @@ public class AdminView extends View {
 		this.us = us;
 		this.as = as;
 
-		logger.info("\nBANK ADMIN ACCESS GRANTED!");
+		logger.info("BANK ADMIN ACCESS GRANTED!");
 
 		try {
 

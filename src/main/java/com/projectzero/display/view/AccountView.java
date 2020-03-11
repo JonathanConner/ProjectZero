@@ -153,20 +153,8 @@ public class AccountView extends View {
 			AccountDAOImpl adi = new AccountDAOImpl();
 
 			adi.processWithdrawal(accNum, amount);
-
-			this.us.loginUser(this.us.getUserInstance().getUsername(), this.us.getUserInstance().getPassword()); // Re
-																													// query
-																													// and
-																													// load
-																													// a
-																													// new
-																													// updated
-																													// user
-																													// object
-																													// with
-																													// updated
-																													// accounts
-
+			logger.info("Account Number " + accNum +" withdrawal "+amount+" complete!");
+			
 		} catch (NumberFormatException nfe) {
 			System.out.println("NumberFormatException: incorrect value supplied. Try again");
 		}
@@ -220,6 +208,7 @@ public class AccountView extends View {
 
 		System.out.println("Would you like to apply for an account? (Y/N)");
 		if (Main.sc.nextLine().equals("Y")) {
+			System.out.println("Enter a another username (not yourself) to apply with:");
 			String username = Main.sc.nextLine();
 			if (this.us.applyForNewJointAccount(this.us.getUserInstance(), username))
 				logger.info("Joint account created! Status is pending.");

@@ -84,7 +84,6 @@ public class AccountDAOImpl implements AccountDAO {
 			sqle.printStackTrace();
 		}
 		
-		System.out.println("Account Number " + accountNumber +" withdrawal complete!");
 		return true;
 		
 	}
